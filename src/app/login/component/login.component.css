@@ -1,0 +1,14 @@
+#login-box {
+  width: 450px;
+  margin: 50px auto 0;
+  background: url(img/07_08_login_4_03.png) no-repeat 100% 100%;
+}
+
+.form-group > label.required:after {
+  content: "*";
+  color: red;
+}
+
+.form-group > .error > .error {
+  color: red;
+}
