@@ -1,31 +1,40 @@
 import { Router } from '@angular/router';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { UserService } from '../../fake/user.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  model = {
-    userName: '',
-    password: '',
-    language: '',
+  model;
+  viewModel = {
+    username: 'Username',
+    password: 'Password',
+    lang: 'Language',
   };
-
-  username = 'Username';
-  password = 'Password';
-  lang = 'Language';
-
   languages = ['English', 'Bulgarian', 'Francais'];
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private userService: UserService) {
   }
 
-  onSubmit() {
-    console.log(this.model);
-    this.router.navigate(['dashboard']);
+  ngOnInit() {
+    this.resetModel();
+  }
+
+  resetModel(): void {
+    this.model =  {
+      userName: '',
+      password: '',
+      language: '',
+    };
+  }
+
+  onSubmit(): void {
+    this.userService.searchUsers(this.model.userName, this.model.password)
+      .subscribe(hero => hero[0] ? this.router.navigate(['dashboard']) : this.resetModel());
   }
 }
 
