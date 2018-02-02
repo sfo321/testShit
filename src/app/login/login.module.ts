@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../fake/user.service';
 import { LoginComponent } from './component/login.component';
@@ -9,7 +9,8 @@ import { LoginRoutingModule } from './login.routing.module';
   imports: [
     FormsModule,
     CommonModule,
-    LoginRoutingModule
+    LoginRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [ UserService ],
   declarations: [ LoginComponent ]
