@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app.routing.module';
+import {NgModule} from '@angular/core';
+import {AppComponent} from './app.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppRoutingModule} from './app.routing.module';
 
-import { HttpClientModule } from '@angular/common/http';
-import { InMemoryDataService } from '../fake/memory.data.service';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+import {HttpClientModule} from '@angular/common/http';
+import {InMemoryDataService} from '../fake/memory.data.service';
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {Router} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,14 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
     AppRoutingModule,
     HttpClientModule,
     HttpClientInMemoryWebApiModule.forRoot(
-      InMemoryDataService, { dataEncapsulation: false }
+      InMemoryDataService, {dataEncapsulation: false}
     )
   ],
   providers: [],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(router: Router) {
+  }
+}
+
