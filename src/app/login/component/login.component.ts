@@ -5,6 +5,7 @@ import { UserModel } from './user.model';
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../fake/user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthService } from '../../main/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   };
   languages = ['English', 'Bulgarian', 'Francais'];
 
-  constructor(private router: Router, private userService: UserService, fmBuilder: FormBuilder) {
+  constructor(private router: Router, private userService: UserService, private authService: AuthService, fmBuilder: FormBuilder) {
     this.model = fmBuilder.group({
       'username': new FormControl('', [Validators.required, Validators.maxLength(5)]),
       'password': new FormControl('', [Validators.required, Validators.maxLength(5)]),
@@ -54,8 +55,14 @@ export class LoginComponent implements OnInit {
 
   onSubmit(): void {
     const data = this.model.value;
-    this.userService.searchUsers(data.username, data.password)
-      .subscribe(user => user[0] ? this.router.navigate(['dashboard']) : this.model.reset());
+    this.authService.login(data.username, data.password)
+      .subscribe(res => {
+        if (res) {
+          this.router.navigate(['dashboard']);
+        } else {
+          this.model.reset();
+        }
+      });
   }
 }
 
