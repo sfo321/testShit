@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { UserService } from '../../fake/user.service';
 import 'rxjs/add/operator/map';
-import { UserService } from '../fake/user.service';
+import 'rxjs/add/observable/of';
+
 
 @Injectable()
 export class AuthService {
+
   isLoggedIn = false;
+  isAdmin = false;
+
   constructor ( private userService: UserService ) {
   }
 
@@ -13,11 +18,14 @@ export class AuthService {
     return this.userService.searchUsers(name, password)
       .map((user) => {
         this.isLoggedIn = !!user[0];
+        this.isAdmin = user[0] ? user[0].role === 'admin' : false;
         return this.isLoggedIn;
       });
   }
 
-  logout(): void {
+  logout(): Observable<boolean> {
     this.isLoggedIn = false;
+    this.isAdmin = false;
+    return Observable.of(this.isLoggedIn);
   }
 }

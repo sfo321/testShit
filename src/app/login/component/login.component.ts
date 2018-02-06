@@ -3,9 +3,8 @@ import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { UserModel } from './user.model';
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '../../fake/user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../main/auth.service';
+import { AuthService } from '../../main/guards/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
   };
   languages = ['English', 'Bulgarian', 'Francais'];
 
-  constructor(private router: Router, private userService: UserService, private authService: AuthService, fmBuilder: FormBuilder) {
+  constructor(private router: Router, private authService: AuthService, fmBuilder: FormBuilder) {
     this.model = fmBuilder.group({
       'username': new FormControl('', [Validators.required, Validators.maxLength(5)]),
       'password': new FormControl('', [Validators.required, Validators.maxLength(5)]),
