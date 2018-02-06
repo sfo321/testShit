@@ -8,8 +8,8 @@ import 'rxjs/add/observable/of';
 @Injectable()
 export class AuthService {
 
-  isLoggedIn = false;
-  isAdmin = false;
+  isLoggedIn: boolean = !!sessionStorage.getItem('logged');
+  isAdmin: boolean = !!sessionStorage.getItem('admin');
 
   constructor ( private userService: UserService ) {
   }
@@ -17,15 +17,20 @@ export class AuthService {
   login(name: string, password: string): Observable<boolean> {
     return this.userService.searchUsers(name, password)
       .map((user) => {
-        this.isLoggedIn = !!user[0];
-        this.isAdmin = this.isLoggedIn ? user[0].role === 'admin' : false;
-        return this.isLoggedIn;
+        console.log(user);
+        if (user[0]) {
+          sessionStorage.setItem('logged', 'true');
+        }
+        if (user[0] && user[0].role === 'admin') {
+          sessionStorage.setItem('admin', 'true');
+        }
+        return !!sessionStorage.getItem('logged');
       });
   }
 
   logout(): Observable<boolean> {
-    this.isLoggedIn = false;
-    this.isAdmin = false;
+    sessionStorage.removeItem('logged');
+    sessionStorage.removeItem('admin');
     return Observable.of(this.isLoggedIn);
   }
 }

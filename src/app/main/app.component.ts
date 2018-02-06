@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {AuthService} from './guards/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +8,19 @@ import {Router} from '@angular/router';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router) {
+
+  isLogged;
+  constructor(private router: Router, private authService: AuthService) {
   }
   ngOnInit() {
+    this.isLogged = this.authService.isLoggedIn;
+  }
+
+  logout() {
+    this.authService.logout()
+      .subscribe(() => {
+        this.isLogged = false;
+        this.router.navigate(['login']);
+      });
   }
 }

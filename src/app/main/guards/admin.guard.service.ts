@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 @Injectable()
 export class AdminGuard extends BaseService {
-  constructor(private authService: AuthService, protected router: Router) {
+  constructor(protected authService: AuthService, protected router: Router) {
     super(router);
   }
 

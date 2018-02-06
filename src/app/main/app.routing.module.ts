@@ -37,9 +37,8 @@ const routes: Routes = [
   imports: [ RouterModule.forRoot(routes,       {
     enableTracing: true,
     preloadingStrategy: LoadingStrategy,
-
-  }) ],
+  })],
   exports: [ RouterModule ],
-  providers: [ LoadingStrategy, AdminGuard, LoginGuard, AuthService, UserService ],
+  providers: [ LoadingStrategy, AdminGuard, LoginGuard, UserService, AuthService ],
 })
 export class AppRoutingModule {}
