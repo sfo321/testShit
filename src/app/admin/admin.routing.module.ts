@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
-import { DashComponent } from './dash/dash.component';
 import { Routes, RouterModule } from '@angular/router';
-import { TrabaComponent } from './traba/traba.component';
-import { LoginGuard } from '../main/guards/guard.service';
+import { EditComponent } from './edit.component/edit.component';
 import { AdminGuard } from '../main/guards/admin.guard.service';
+import { AdminComponent } from './admin.component/admin.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashComponent,
-    canActivate: [ LoginGuard ],
+    component: AdminComponent,
+    canActivate: [ AdminGuard ],
     children: [
       {
-        path: 'traba',
-        component: TrabaComponent,
+        path: 'edit',
+        component: EditComponent,
         canActivate: [ AdminGuard ],
       }
     ],
   },
-
 ];
 
 @NgModule({
@@ -26,4 +24,4 @@ const routes: Routes = [
   exports: [ RouterModule ],
 })
 
-export class DashRoutingModule {}
+export class AdminRoutingModule {}

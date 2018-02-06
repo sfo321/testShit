@@ -18,7 +18,7 @@ export class AuthService {
     return this.userService.searchUsers(name, password)
       .map((user) => {
         this.isLoggedIn = !!user[0];
-        this.isAdmin = user[0] ? user[0].role === 'admin' : false;
+        this.isAdmin = this.isLoggedIn ? user[0].role === 'admin' : false;
         return this.isLoggedIn;
       });
   }

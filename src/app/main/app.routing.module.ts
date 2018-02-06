@@ -12,12 +12,22 @@ const routes: Routes = [
     loadChildren: '../login/login.module#LoginModule',
   },
   {
+    path: 'admin',
+    loadChildren: '../admin/admin.module#AdminModule',
+    canLoad: [ AdminGuard ],
+  },
+  {
     path: 'dashboard',
     loadChildren: '../dashboard/dashboard.module#DashboardModule',
     canLoad: [ LoginGuard ],
   },
   {
     path: '',
+    redirectTo: '/login',
+    pathMatch: 'full',
+  },
+  {
+    path: '**',
     redirectTo: '/login',
     pathMatch: 'full',
   }
