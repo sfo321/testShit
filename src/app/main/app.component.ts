@@ -8,19 +8,8 @@ import {AuthService} from './guards/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
-  isLogged;
-  constructor(private router: Router, private authService: AuthService) {
+  constructor() {
   }
   ngOnInit() {
-    this.isLogged = this.authService.isLoggedIn;
-  }
-
-  logout() {
-    this.authService.logout()
-      .subscribe(() => {
-        this.isLogged = false;
-        this.router.navigate(['login']);
-      });
   }
 }
