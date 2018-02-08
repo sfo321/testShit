@@ -58,8 +58,7 @@ export class LoginComponent implements OnInit {
   }
 
   setState(user: User): void {
-    console.log(user);
-    this.isLoggedIn = user == null;
+    this.isLoggedIn = user !== null;
   }
 
   onSubmit(): void {
