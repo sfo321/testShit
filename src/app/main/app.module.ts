@@ -6,11 +6,13 @@ import {AppRoutingModule} from './app.routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {InMemoryDataService} from '../fake/memory.data.service';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
-import {Router} from '@angular/router';
+import {HeaderComponent} from './header/header.component';
+import {DataService} from '../fake/data.service';
 
 @NgModule({
   declarations: [
     AppComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -20,11 +22,11 @@ import {Router} from '@angular/router';
       InMemoryDataService, {dataEncapsulation: false}
     )
   ],
-  providers: [],
+  providers: [ DataService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {
-  constructor(router: Router) {
+  constructor() {
   }
 }
 

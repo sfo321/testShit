@@ -3,38 +3,43 @@ import { Observable } from 'rxjs/Observable';
 import { UserService } from '../../fake/user.service';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/observable/of';
+import { User } from '../../fake/user';
 
 
 @Injectable()
 export class AuthService {
 
-  isLoggedIn: boolean = !!sessionStorage.getItem('logged');
-  isAdmin: boolean = !!sessionStorage.getItem('admin');
-
   constructor ( private userService: UserService ) {
   }
 
-  login(name: string, password: string): Observable<boolean> {
+  login(name: string, password: string): Observable<User> {
     return this.userService.searchUsers(name, password)
       .map((user) => {
-        console.log(user);
         if (user[0]) {
-          sessionStorage.setItem('logged', 'true');
-          this.isLoggedIn = true;
+          sessionStorage.setItem('logged', JSON.stringify(user[0]));
         }
         if (user[0] && user[0].role === 'admin') {
           sessionStorage.setItem('admin', 'true');
-          this.isAdmin = true;
         }
-        return this.isLoggedIn;
+        return user[0];
       });
   }
 
   logout(): Observable<boolean> {
     sessionStorage.removeItem('logged');
     sessionStorage.removeItem('admin');
-    this.isLoggedIn = false;
-    this.isAdmin = false;
     return Observable.of(this.isLoggedIn);
+  }
+
+  get isLoggedIn(): boolean {
+    return !!sessionStorage.getItem('logged');
+  }
+
+  get isAdmin(): boolean {
+    return !!sessionStorage.getItem('admin');
+  }
+
+  get currentUser(): User {
+    return JSON.parse(sessionStorage.getItem('logged'));
   }
 }

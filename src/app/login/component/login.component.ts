@@ -2,9 +2,11 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 import { Router } from '@angular/router';
 import { UserModel } from './user.model';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../main/guards/auth.service';
+import { DataService } from '../../fake/data.service';
+import { User } from '../../fake/user';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +16,7 @@ import { AuthService } from '../../main/guards/auth.service';
 export class LoginComponent implements OnInit {
 
   model: FormGroup;
-  isLogged: boolean;
+  isLoggedIn: boolean;
 
   viewModel = {
     username: 'Username',
@@ -23,7 +25,7 @@ export class LoginComponent implements OnInit {
   };
   languages = ['English', 'Bulgarian', 'Francais'];
 
-  constructor(private router: Router, private authService: AuthService, fmBuilder: FormBuilder) {
+  constructor(private router: Router, private authService: AuthService, private dataService: DataService, fmBuilder: FormBuilder) {
     this.model = fmBuilder.group({
       'username': new FormControl('', [Validators.required, Validators.maxLength(5)]),
       'password': new FormControl('', [Validators.required, Validators.maxLength(5)]),
@@ -32,12 +34,13 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLogged = this.authService.isLoggedIn;
     this.model.valueChanges
       .map((value) => {
         this.restrict(value);
         return this.setValue(value);
       }).subscribe(() => {});
+    this.isLoggedIn = this.authService.isLoggedIn;
+    this.dataService.current.subscribe((user) => this.setState(user));
   }
 
   restrict(value: UserModel): UserModel {
@@ -54,24 +57,22 @@ export class LoginComponent implements OnInit {
     this.model.setValue(value, { onlySelf: true, emitEvent: false });
   }
 
+  setState(user: User): void {
+    console.log(user);
+    this.isLoggedIn = user == null;
+  }
+
   onSubmit(): void {
     const data = this.model.value;
     this.authService.login(data.username, data.password)
       .subscribe(res => {
         if (res) {
-          this.isLogged = true;
+          this.dataService.emitData(res);
+          this.isLoggedIn = true;
           this.router.navigate(['dashboard']);
         } else {
-          this.isLogged = false;
           this.model.reset();
         }
-      });
-  }
-
-  logout() {
-    this.authService.logout()
-      .subscribe(() => {
-        this.isLogged = false;
       });
   }
 }

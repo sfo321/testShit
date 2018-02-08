@@ -10,6 +10,11 @@ export class AdminGuard extends BaseService {
   }
 
   checkPermission(): boolean {
-    return this.authService.isAdmin;
+    if (this.authService.isAdmin) {
+      return true;
+    }
+
+    this.router.navigate(['/dashboard']);
+    return false;
   }
 }

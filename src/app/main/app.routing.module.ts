@@ -41,4 +41,7 @@ const routes: Routes = [
   exports: [ RouterModule ],
   providers: [ LoadingStrategy, AdminGuard, LoginGuard, UserService, AuthService ],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+  constructor() {
+  }
+}
