@@ -22,6 +22,11 @@ const routes: Routes = [
     canLoad: [ LoginGuard ],
   },
   {
+    path: 'some',
+    loadChildren: '../some/some.module#SomeModule',
+    canLoad: [ LoginGuard ],
+  },
+  {
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',

@@ -8,13 +8,19 @@ import {InMemoryDataService} from '../fake/memory.data.service';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {HeaderComponent} from './header/header.component';
 import {DataService} from '../fake/data.service';
+import {ModalModule} from '../modal/modal.module';
+import {ModalService} from '../modal/modal.service';
+import {RendererService} from './renderer.service';
+import {ModalComponent} from '../some/modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
+    ModalComponent,
   ],
   imports: [
+    ModalModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -22,7 +28,7 @@ import {DataService} from '../fake/data.service';
       InMemoryDataService, {dataEncapsulation: false}
     )
   ],
-  providers: [ DataService ],
+  providers: [ DataService, ModalService, RendererService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {

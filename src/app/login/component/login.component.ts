@@ -7,6 +7,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AuthService } from '../../main/guards/auth.service';
 import { DataService } from '../../fake/data.service';
 import { User } from '../../fake/user';
+import { ModalService } from '../../modal/modal.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,9 @@ export class LoginComponent implements OnInit {
   };
   languages = ['English', 'Bulgarian', 'Francais'];
 
-  constructor(private router: Router, private authService: AuthService, private dataService: DataService, fmBuilder: FormBuilder) {
+  constructor(private router: Router, private authService: AuthService,
+              private dataService: DataService, fmBuilder: FormBuilder,
+              private service: ModalService) {
     this.model = fmBuilder.group({
       'username': new FormControl('', [Validators.required, Validators.maxLength(5)]),
       'password': new FormControl('', [Validators.required, Validators.maxLength(5)]),
@@ -62,6 +65,8 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log(this.service);
+    this.service.open('modal1', { message: 'tralalaaaa'});
     const data = this.model.value;
     this.authService.login(data.username, data.password)
       .subscribe(res => {

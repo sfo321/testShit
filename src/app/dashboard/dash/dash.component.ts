@@ -10,4 +10,8 @@ export class DashComponent implements OnInit {
   }
   ngOnInit() {
   }
+
+  open() {
+    console.log('hopen');
+  }
 }
