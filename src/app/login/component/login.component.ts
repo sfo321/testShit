@@ -65,13 +65,12 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.service);
-    this.service.open('modal1', { message: 'tralalaaaa'});
     const data = this.model.value;
     this.authService.login(data.username, data.password)
       .subscribe(res => {
         if (res) {
           this.dataService.emitData(res);
+          this.service.open('modal1', { message: data.username + ' has just logged in!'});
           this.isLoggedIn = true;
           this.router.navigate(['dashboard']);
         } else {

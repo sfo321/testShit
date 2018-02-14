@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-some',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.css']
+  templateUrl: './some.component.html',
+  styleUrls: ['./some.component.css']
 })
-export class ModalComponent implements OnInit {
+export class SomeComponent implements OnInit {
 
   constructor() { }
 

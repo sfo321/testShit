@@ -11,13 +11,11 @@ import {DataService} from '../fake/data.service';
 import {ModalModule} from '../modal/modal.module';
 import {ModalService} from '../modal/modal.service';
 import {RendererService} from './renderer.service';
-import {ModalComponent} from '../some/modal/modal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
-    ModalComponent,
   ],
   imports: [
     ModalModule,
