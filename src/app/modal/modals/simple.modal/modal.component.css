@@ -1,6 +1,27 @@
 .modal-frame{
-  height: 100px;
-  width: 200px;
-  background-color: red;
+  height: 140px;
+  width: 32%;
+  background-color: lightcyan;
+  position: absolute;
+  z-index: 10000000;
+  top: 0;
+  right: 34%;
+  border-radius: 10px;
+  border: 1px solid lightblue;
+  display: flex;
+  justify-content: space-around;
+  align-content: space-around;
+  flex-wrap: wrap;
+}
+
+.modal-simple{
+  display: inline-block;
+  margin: 0 auto;
+}
+
+.close{
+  display: inline-block;
+  margin: 0 auto;
+  float: right;
 }
 

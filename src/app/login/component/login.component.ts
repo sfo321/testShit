@@ -70,7 +70,8 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         if (res) {
           this.dataService.emitData(res);
-          this.service.open('modal1', { message: data.username + ' has just logged in!'});
+          this.service.open('modal1', { message: (data.username + ' ' + data.password + ' has just logged in!')})
+            .getData().then(x => console.log(x));
           this.isLoggedIn = true;
           this.router.navigate(['dashboard']);
         } else {

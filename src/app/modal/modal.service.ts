@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
+import { of } from 'rxjs/observable/of';
 
 @Injectable()
 
@@ -14,9 +15,10 @@ export class ModalService {
     this.modals.push(modal);
   }
 
-  open(id: string, data: Object): void {
+  open(id: string, data: Object): any {
     const modal = this.modals.find(m => m.id === id);
     modal.open(data);
+    return modal.click;
   }
 
   close(id: string): Observable<object> {

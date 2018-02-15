@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { ModalService } from '../../modal.service';
-import { of } from 'rxjs/observable/of';
 
 @Component({
   selector: 'app-modal1',
@@ -11,11 +10,26 @@ import { of } from 'rxjs/observable/of';
 export class SimpleModalComponent implements OnInit, OnDestroy {
 
   @Input() id: string;
-  private el: HTMLElement;
+  private el: any;
   message: string;
+  click: any;
 
   constructor(private service: ModalService, private element: ElementRef, private renderer: Renderer2) {
     this.el = element.nativeElement;
+
+    this.click = ((el) => {
+      function getData() {
+        return new Promise((res, rej) => {
+          el.addEventListener('click', function tr() {
+            if (el.classList.contains('close')) {
+              el.removeEventListener('click', tr, true);
+              res('CLICKED!!');
+            }
+          });
+        });
+      }
+      return { getData };
+    })(this.el);
   }
 
   ngOnInit() {
@@ -29,12 +43,9 @@ export class SimpleModalComponent implements OnInit, OnDestroy {
     this.el.classList.remove('hidden');
   }
 
-  close() {
+  close(): void {
     this.el.classList.add('hidden');
-    this.renderer.addClass(document.body, 'closed');
-    return of({
-      closed: true,
-    });
+    return this.renderer.addClass(document.body, 'closed');
   }
 
   ngOnDestroy() {

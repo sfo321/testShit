@@ -14,7 +14,9 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.renderer.insertBefore(document.body, '<app-modal></app-modal>', document.body.firstElementChild);
+    // console.log(document.body);
+    // console.log(document.body.firstElementChild);
+    // this.renderer.appendChild(document.body.firstElementChild, '<app-modal></app-modal>');
   }
 
   openModal(id: string, data: Object): void {
