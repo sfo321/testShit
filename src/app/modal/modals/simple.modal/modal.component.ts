@@ -20,8 +20,8 @@ export class SimpleModalComponent implements OnInit, OnDestroy {
     this.click = ((el) => {
       function getData() {
         return new Promise((res, rej) => {
-          el.addEventListener('click', function tr() {
-            if (el.classList.contains('close')) {
+          el.addEventListener('click', function tr(ev) {
+            if (ev.target.classList.contains('close')) {
               el.removeEventListener('click', tr, true);
               res('CLICKED!!');
             }
